@@ -5,7 +5,7 @@
  *      Author: nir
  */
 
-#define n 3
-#define m 3
-typedef int BLOCK[n][m];
-typedef BLOCK BOARD[m][n];
+#define N 3
+#define M 3
+typedef int BLOCK[N][M];
+typedef BLOCK BOARD[M][N];

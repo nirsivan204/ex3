@@ -5,7 +5,8 @@
  *      Author: nir
  */
 #include "board_struct.h"
+#include <time.h>
 
 
-void build_new_board (int fix,BOARD game_board , BOARD **solved_board);
+void build_new_board (int fix,BOARD game_board , BOARD solved_board);
 
