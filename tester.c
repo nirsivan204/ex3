@@ -5,7 +5,7 @@
  *      Author: nir
  */
 #include "MainAux.h"
-#include "Game.h"
+#include "Solver.h"
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -39,17 +39,27 @@ void test_printing(BOARD rand_board,BOARD fix_board){
 	print_board(rand_board,fix_board);
 }
 
+
 int main(int argc, char *argv[]){
 	this_is_global = 1;
-	BOARD rand_board;
+	//BOARD rand_board;
 	BOARD fix_board;
+	BOARD board;
+	BOARD solved_board;
 	SP_BUFF_SET();
 	int seed = atoi(argv[0]);
 	srand(seed);
-	make_random_board(rand_board);
-	copy_board(rand_board , fix_board);
-	test_printing(rand_board,fix_board);
-	set(rand_board,fix_board,5,4,4);
+	//make_random_board(rand_board);
+	//copy_board(rand_board , fix_board);
+	//test_printing(rand_board,fix_board);
+	//set(rand_board,fix_board,5,4,4);
+	zero_board(board);
+	zero_board(fix_board);
+	zero_board(solved_board);
+
+	//print_board(board,board);
+	build_new_board(15,board,fix_board,solved_board);
+	//print_board(board,board);
 	return 0;
 }
 

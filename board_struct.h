@@ -11,4 +11,9 @@
 typedef int BLOCK[N][M];
 typedef BLOCK BOARD[M][N];
 
+int get_element_from_block(BLOCK block, int x, int y);
+int get_element_from_board(BOARD board, int x,int y);
 
+void set_element_to_block(BLOCK block, int x, int y, int z);
+
+void set_element_to_board(BOARD board, int x,int y,int z);

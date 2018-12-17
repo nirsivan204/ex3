@@ -8,7 +8,6 @@
 #include "SPBufferset.h"
 #include "MainAux.h"
 #include "Solver.h"
-#include "Game.h"
 #include <time.h>
 #include "board_struct.h"
 
