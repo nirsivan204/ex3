@@ -9,9 +9,21 @@
 
 #define SEPERATOR_ROW "----------------------------------\n"
 
+void print_block(BLOCK block){
+	int i;
+	int j;
+	for (i=0;i<N;i++){
+		for (j=0;j<M;j++){
+			printf("%d ", block[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
+
 void print_block_row(BLOCK block,BLOCK fixed_block,int row){
-	int i=0;
-	for (;i<M;i++){
+	int i;
+	for (i=0;i<M;i++){
 		if(fixed_block[row][i]!=0){
 			printf(".");
 		}else{
@@ -33,10 +45,9 @@ void print_board(BOARD board, BOARD fixed_board){
 	int row = 0;
 	for (block_row = 0;block_row<M;block_row++){
 		printf(SEPERATOR_ROW);
-
-		for (block_col = 0;block_col<N;block_col++){
+		for(row = 0;row<N;row++){
 			printf("| ");
-			for(row = 0;row<N;row++){
+			for (block_col = 0;block_col<N;block_col++){
 				print_block_row(board[block_row][block_col],fixed_board[block_row][block_col],row);
 				printf(" |");
 			}

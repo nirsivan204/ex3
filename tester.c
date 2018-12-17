@@ -5,11 +5,12 @@
  *      Author: nir
  */
 #include "MainAux.h"
+#include "Game.h"
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "SPBufferset.h"
-
+int this_is_global;
 
 
 void make_random_block(BLOCK rand_block){
@@ -17,7 +18,8 @@ void make_random_block(BLOCK rand_block){
 	int j=0;
 	for (i=0; i<N; i++){
 		for (j=0; j<M; j++){
-			rand_block[i][j] = 1+(rand()%9);
+			/*rand_block[i][j] = 1+(rand()%9);*/
+			rand_block[i][j] = this_is_global++;
 		}
 	}
 }
@@ -38,6 +40,7 @@ void test_printing(BOARD rand_board,BOARD fix_board){
 }
 
 int main(int argc, char *argv[]){
+	this_is_global = 1;
 	BOARD rand_board;
 	BOARD fix_board;
 	SP_BUFF_SET();
@@ -46,6 +49,7 @@ int main(int argc, char *argv[]){
 	make_random_board(rand_board);
 	copy_board(rand_board , fix_board);
 	test_printing(rand_board,fix_board);
+	set(rand_board,fix_board,5,4,4);
 	return 0;
 }
 

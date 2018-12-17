@@ -7,7 +7,7 @@
  */
 #include "Solver.h"
 
-void build_new_board (int fix,BOARD game_board , BOARD solved_board){
+void build_new_board (int fix, BOARD game_board , BOARD solved_board){
 
 }
 

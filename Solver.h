@@ -5,6 +5,8 @@
  *      Author: nir
  */
 #include "board_struct.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 
 
