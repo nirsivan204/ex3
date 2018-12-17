@@ -58,7 +58,7 @@ int main(int argc, char *argv[]){
 	zero_board(solved_board);
 
 	//print_board(board,board);
-	build_new_board(15,board,fix_board,solved_board);
+	build_new_board(35,board,fix_board,solved_board);
 	//print_board(board,board);
 	return 0;
 }
