@@ -11,7 +11,7 @@
 #include "Game.h"
 #include "Parser.h"
 #include <time.h>
-#include "board_struct.h"
+#include "BoardHandle.h"
 
 int main(int argc, char *argv[]){
 	BOARD game_board;

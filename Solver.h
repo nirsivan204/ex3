@@ -4,8 +4,7 @@
  *  Created on: 12 בדצמ 2018
  *      Author: nir
  */
-#include "board_struct.h"
-#include "MainAux.h"
+#include "BoardHandle.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>

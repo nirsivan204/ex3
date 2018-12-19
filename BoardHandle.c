@@ -4,7 +4,7 @@
  *  Created on: 17 בדצמ 2018
  *      Author: nir
  */
-#include "board_struct.h"
+#include "BoardHandle.h"
 
 int get_element_from_block(BLOCK block, int x, int y){
 	return block[y%N][x%M];
