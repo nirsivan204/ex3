@@ -5,7 +5,3 @@
  *      Author: nir
  */
 #include "MainAux.h"
-
-
-
-

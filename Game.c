@@ -6,9 +6,6 @@
  */
 
 #include "Game.h"
-#include "MainAux.h"
-
-
 
 
 int hint(BOARD solved_board, int x, int y) {
