@@ -18,8 +18,7 @@ void make_random_block(BLOCK rand_block){
 	int j=0;
 	for (i=0; i<N; i++){
 		for (j=0; j<M; j++){
-			/*rand_block[i][j] = 1+(rand()%9);*/
-			rand_block[i][j] = this_is_global++;
+			rand_block[i][j] = 1+(rand()%9);
 		}
 	}
 }
@@ -40,6 +39,8 @@ void test_printing(BOARD rand_board,BOARD fix_board){
 }
 
 
+
+/*
 int main(int argc, char *argv[]){
 	this_is_global = 1;
 	//BOARD rand_board;
@@ -58,9 +59,11 @@ int main(int argc, char *argv[]){
 	zero_board(solved_board);
 
 	//print_board(board,board);
-	build_new_board(35,board,fix_board,solved_board);
+	initialize_puzzle(35,board,fix_board,solved_board);
 	//print_board(board,board);
 	return 0;
 }
+*/
+
 
 

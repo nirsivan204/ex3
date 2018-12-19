@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "parser.h"
-int is_legal_number(int number, int minValue, int maxValue) {
-	return number >= minValue && number <= maxValue;
-}
+
+
 int num_of_params(int command) {
 	switch (command) {
 	case 1: /* set */
@@ -16,30 +15,55 @@ int num_of_params(int command) {
 	}
 }
 
-int search_command(char *s) {
+int is_legal_number(int number, int minValue, int maxValue) {
+	return number >= minValue && number <= maxValue;
+}
+
+int search_command(char *string, int is_game_over) {
 	int index;
 	char *commands[] = {"set", "hint", "validate", "restart", "exit"};
-	for (index = 0; index < 5; index++)
-		if (strcmp(s, commands[index]) == 0)
+	index = (is_game_over == 1) ? 3 : 0;
+	for (; index < 5; index++)
+		if (strcmp(string, commands[index]) == 0)
 			return ++index;
 	return -1;
 }
 
-int is_valid_command(char command_input[], int *command) {
-	char *string;
+int is_valid_command(char command_input[], int *command, int is_game_over) {
+	char *string = "";
 	int index = 0;
 	string = strtok(command_input, " \t\r\n");
-	command[index] = search_command(string);
-	if (command[index] == -1)
+	command[index] = search_command(string, is_game_over);
+
+	if (command[index] == -1) {
 		return -1;
+	}
+
 	for (index = 1; index <= num_of_params(command[0]); index++) {
 		string = strtok(NULL, " \t\r\n");
-		if (string == NULL)
+		if (string == NULL) {
 			return -1;
+		}
 		command[index] = atoi(string);
 	}
 	return 1;
 }
+
+int read_command(int *command, int is_game_over) {
+	char command_input[MAX_COMMAND_LENGTH];
+	fflush(stdin);
+	fgets(command_input, MAX_COMMAND_LENGTH, stdin);
+	if (is_valid_command(command_input, command, is_game_over)==-1) {
+		printf("Error: invalid command\n");
+		fflush(stdout);
+		return read_command(command, is_game_over);
+	}
+	return 1;
+}
+
+
+
+
 
 int num_of_fixed_cells() {
 	int num_Of_cells;
@@ -55,21 +79,4 @@ int num_of_fixed_cells() {
 	}
 	return num_Of_cells;
 }
-
-
-
-int read_command(int *command) {
-	char command_input[MAX_COMMAND_LENGTH];
-	fgets(command_input, MAX_COMMAND_LENGTH, stdin);
-	if (is_valid_command(command_input, command)==-1) {
-		printf("Error: invalid command\n");
-		return read_command(command);
-	}
-	return 1;
-}
-
-
-
-
-
 

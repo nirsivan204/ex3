@@ -6,16 +6,9 @@
  *      Author: nir
  */
 #include "Solver.h"
+#include "assert.h"
 
-void zero_board(BOARD board){
-	int i;
-	int j;
-	for (i=0;i<M*N;i++){
-		for (j=0;j<M*N;j++){
-			set_element_to_board(board,j,i,0);
-		}
-	}
-}
+
 
 void print_array(int *arr,int length){
 	int i;
@@ -39,12 +32,16 @@ int find_legal_digits(int *legal_digits,BOARD game_board,int x,int y){
 	int digit;
 	int num_of_legal_digits = 0;
 	for (digit = 1;digit<=N*M;digit++){
+		if(x == 8 && y == 8 && digit == 8){
+			printf("digit =%d", digit );
+			int bool = is_valid_insertion(game_board,x,y,digit);
+			printf("bool = %d", bool);
+		}
 		if(is_valid_insertion(game_board,x,y,digit)==1){
 			legal_digits[num_of_legal_digits] = digit;
 			num_of_legal_digits++;
 		}
 	}
-
 	return num_of_legal_digits;
 }
 
@@ -69,7 +66,7 @@ int get_valid_digit(int *legal_digits ,int num_of_legal_digits, int is_determin)
 	if(num_of_legal_digits == 1){
 		return legal_digits[0];
 	}
-	print_array(legal_digits,num_of_legal_digits);
+	//print_array(legal_digits,num_of_legal_digits);
 	if(is_determin==0){
 		index = get_rand_number(num_of_legal_digits);
 	}
@@ -78,7 +75,7 @@ int get_valid_digit(int *legal_digits ,int num_of_legal_digits, int is_determin)
 	return res;
 }
 
-int build_board_helper(BOARD solved_board,int x, int y, int is_determin , BOARD validation_board){
+int build_board_helper(BOARD solved_board,int x, int y, int is_determin){
 	int next_x;
 	int next_y;
 	int digit;
@@ -87,14 +84,19 @@ int build_board_helper(BOARD solved_board,int x, int y, int is_determin , BOARD 
 	int legal_digits[N*M];
 	num_of_legal_digits = find_legal_digits(legal_digits,solved_board, x, y);
 	if(compute_next_cordinates(x,y,&next_x,&next_y) == 1){
-		if(get_element_from_board(validation_board,x,y)==0 || is_determin == 0){
+		printf("%d x= %d, y= %d",num_of_legal_digits , x , y);
+		print_board(solved_board,solved_board);
+		assert(num_of_legal_digits == 1);
+		if(get_element_from_board(solved_board,x,y) != 0){
+			assert (legal_digits[0] == get_element_from_board(solved_board,x,y));
+		}
+		else{
 			set_element_to_board(solved_board,x,y,legal_digits[0]);
 		}
 		return 1;
 	}
-	if(is_determin==1 && get_element_from_board(validation_board,x,y)!=0){
-		set_element_to_board(solved_board,x,y,get_element_from_board(validation_board,x,y));
-		return build_board_helper(solved_board,next_x,next_y,is_determin , validation_board);
+	if(get_element_from_board(solved_board,x,y)!=0){
+		return build_board_helper(solved_board,next_x,next_y,is_determin);
 	}
 	if(num_of_legal_digits == 0){
 		set_element_to_board(solved_board,x,y,0);
@@ -104,8 +106,8 @@ int build_board_helper(BOARD solved_board,int x, int y, int is_determin , BOARD 
 	while (num_of_legal_digits>0 && valid == 0){
 		digit = get_valid_digit(legal_digits , num_of_legal_digits , is_determin);
 		set_element_to_board(solved_board,x,y,digit);
-		print_board(solved_board,validation_board);
-		valid = build_board_helper(solved_board,next_x,next_y,is_determin , validation_board);
+		//print_board(solved_board,solved_board);
+		valid = build_board_helper(solved_board,next_x,next_y,is_determin);
 		num_of_legal_digits--;
 	}
 	if(valid == 0){
@@ -129,22 +131,15 @@ void make_fix_board(int fix, BOARD fix_board, BOARD solved_board){
 	}
 }
 
-void build_new_board (int fix, BOARD game_board ,BOARD fix_board, BOARD solved_board){
-	zero_board(fix_board);
-	zero_board(game_board);
-	zero_board(solved_board);
-	int res = build_board_helper(solved_board,0,0,0 , fix_board);
-	if(res == 0){
-		printf("error!!!");
-	}else{
-		make_fix_board(fix,fix_board,solved_board);
-		print_board(solved_board,fix_board);
-		copy_board(fix_board,game_board);
-		zero_board(solved_board);
-		copy_board(fix_board,solved_board);
-		build_board_helper(solved_board,0,0,1 , fix_board);
-		print_board(solved_board,fix_board);
-	}
+void initialize_puzzle (int fix, BOARD game_board ,BOARD fix_board, BOARD solved_board){
+	zero_boards(game_board, fix_board, solved_board);
+	printf("fix = %d\n",fix);
+	int res = build_board_helper(solved_board,0,0,0);
+	assert(res != 0);
+	make_fix_board(fix,fix_board,solved_board);
+	print_board(solved_board,fix_board);
+	copy_board(fix_board,game_board);
+	print_board(game_board,fix_board);
 }
 
 
