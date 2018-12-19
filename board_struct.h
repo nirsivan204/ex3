@@ -6,8 +6,8 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
-#define N 3
-#define M 3
+#define N 2
+#define M 2
 typedef int BLOCK[N][M];
 typedef BLOCK BOARD[M][N];
 

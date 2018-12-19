@@ -32,11 +32,6 @@ int find_legal_digits(int *legal_digits,BOARD game_board,int x,int y){
 	int digit;
 	int num_of_legal_digits = 0;
 	for (digit = 1;digit<=N*M;digit++){
-		if(x == 8 && y == 8 && digit == 8){
-			printf("digit =%d", digit );
-			int bool = is_valid_insertion(game_board,x,y,digit);
-			printf("bool = %d", bool);
-		}
 		if(is_valid_insertion(game_board,x,y,digit)==1){
 			legal_digits[num_of_legal_digits] = digit;
 			num_of_legal_digits++;
@@ -82,15 +77,19 @@ int build_board_helper(BOARD solved_board,int x, int y, int is_determin){
 	int num_of_legal_digits;
 	int valid = 0;
 	int legal_digits[N*M];
+	int end_of_board = 0;
 	num_of_legal_digits = find_legal_digits(legal_digits,solved_board, x, y);
-	if(compute_next_cordinates(x,y,&next_x,&next_y) == 1){
-		printf("%d x= %d, y= %d",num_of_legal_digits , x , y);
-		print_board(solved_board,solved_board);
-		assert(num_of_legal_digits == 1);
-		if(get_element_from_board(solved_board,x,y) != 0){
-			assert (legal_digits[0] == get_element_from_board(solved_board,x,y));
+	end_of_board = compute_next_cordinates(x,y,&next_x,&next_y);
+	if(get_element_from_board(solved_board,x,y)!=0){
+		assert(is_determin == 1);
+		if(end_of_board == 0 ){
+			return build_board_helper(solved_board,next_x,next_y,is_determin);
 		}
-		else{
+	}
+	if(end_of_board == 1){
+		//assert(num_of_legal_digits == 1);
+		if(get_element_from_board(solved_board,x,y) == 0){
+
 			set_element_to_board(solved_board,x,y,legal_digits[0]);
 		}
 		return 1;
@@ -133,7 +132,6 @@ void make_fix_board(int fix, BOARD fix_board, BOARD solved_board){
 
 void initialize_puzzle (int fix, BOARD game_board ,BOARD fix_board, BOARD solved_board){
 	zero_boards(game_board, fix_board, solved_board);
-	printf("fix = %d\n",fix);
 	int res = build_board_helper(solved_board,0,0,0);
 	assert(res != 0);
 	make_fix_board(fix,fix_board,solved_board);
