@@ -49,16 +49,18 @@ int is_valid_command(char command_input[], int *command, int is_game_over) {
 	return 1;
 }
 
-int read_command(int *command, int is_game_over) {
+void read_command(int *command, int is_game_over) {
 	char command_input[MAX_COMMAND_LENGTH];
 	fflush(stdin);
-	fgets(command_input, MAX_COMMAND_LENGTH, stdin);
+	if (fgets(command_input, MAX_COMMAND_LENGTH, stdin) == NULL){
+		command[0]=5;
+		return;
+	}
 	if (is_valid_command(command_input, command, is_game_over)==-1) {
 		printf("Error: invalid command\n");
 		fflush(stdout);
-		return read_command(command, is_game_over);
+		read_command(command, is_game_over);
 	}
-	return 1;
 }
 
 

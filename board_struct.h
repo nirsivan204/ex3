@@ -20,3 +20,6 @@ void set_element_to_board(BOARD board, int x,int y,int z);
 void zero_boards(BOARD board1, BOARD board2, BOARD board3);
 void zero_board(BOARD board);
 int is_valid_insertion(BOARD board,int x,int y,int z);
+void print_block(BLOCK block);
+void print_board(BOARD board, BOARD fixed_board);
+void copy_board(BOARD in_board, BOARD out_board);

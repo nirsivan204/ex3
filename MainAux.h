@@ -6,6 +6,4 @@
  */
 #include "board_struct.h"
 
-void print_block(BLOCK block);
-void print_board(BOARD board, BOARD fixed_board);
-void copy_board(BOARD in_board, BOARD out_board);
+
