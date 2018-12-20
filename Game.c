@@ -17,7 +17,7 @@ int validate(BOARD board, BOARD solved_board) {
 	int is_solvable;
 	BOARD temp_board;
 	copy_board(board,temp_board);
-	is_solvable = build_board_helper(temp_board,0,0,1);
+	is_solvable = build_board(temp_board,1);
 	if(is_solvable == 1){
 		copy_board(temp_board,solved_board);
 		printf("Validation passed: board is solvable\n");

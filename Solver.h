@@ -9,5 +9,27 @@
 #include <stdio.h>
 #include <time.h>
 
-void initialize_puzzle (int fix,BOARD game_board ,BOARD fix_board, BOARD solved_board);
-int build_board_helper(BOARD solved_board,int x, int y, int is_determin);
+/*
+ * Solver module - finds a solution for an board of sudoku.
+ *
+ *initialize_puzzle - initializes a solvable puzzle to game_board, and storing the solution.
+ *build_board 		- can build a new a random board or check deterministicly if it is solvable, and storing the solution.
+ *
+ *
+ */
+/*
+ * @param fix_num - num of fixed cells needed in the new board.
+ * @param game_board - the board that will be used for storing the new game. At start will be a copy of fix_board
+ * @param fix_board - the board that will be used for storing the new fixed board.
+ * @param solved_board - the board that will be used for storing the new game solution.
+ *
+ *
+ */
+void initialize_puzzle (int fix_num,BOARD game_board ,BOARD fix_board, BOARD solved_board);
+/*
+ * @param is_determin - 0 if randomly board building is needed, 1 if deterministic validation is needed
+ * @param board - the board that will be used for storing the solution of the game.
+ * @return 1 if build/validation was successful, 0 if not.
+ *
+ */
+int build_board(BOARD board, int is_determin);
