@@ -143,11 +143,11 @@ void zero_boards(BOARD board1, BOARD board2, BOARD board3){
 }
 
 void initialize_puzzle (int fix_num, BOARD game_board ,BOARD fix_board, BOARD solved_board){ /*initializing 3 boards: solved, fixed, and game. */
+	int res;
 	zero_boards(game_board, fix_board, solved_board); /*zero all boards*/
-	int res = build_board(solved_board,0);/*find a random board*/
+	res = build_board(solved_board,0);/*find a random board*/
 	assert(res != 0);
 	make_fix_board(fix_num,fix_board,solved_board);/* fix "fix_num" of places in fix_board*/
-	print_board(solved_board,fix_board);
 	copy_board(fix_board,game_board); /* copy fix_board to game_board*/
 	print_board(game_board,fix_board);
 }
