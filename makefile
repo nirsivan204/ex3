@@ -14,5 +14,6 @@ Solver.o: Solver.c Solver.h BoardHandle.h
 BoardHandle.o: BoardHandle.c BoardHandle.h 
 	$(CC) $(COMP_FLAG) -c $*.c
 Parser.o: Parser.c Parser.h 
+	$(CC) $(COMP_FLAG) -c $*.c
 clean:
 	rm -f $(OBJS) $(EXEC)
