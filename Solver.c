@@ -61,7 +61,6 @@ int get_valid_digit(int *legal_digits ,int num_of_legal_digits, int is_determin)
 	if(num_of_legal_digits == 1){
 		return legal_digits[0];
 	}
-	//print_array(legal_digits,num_of_legal_digits);
 	if(is_determin==0){ /*if randomly*/
 		index = get_rand_number(num_of_legal_digits);/*get random index, else index =0*/
 	}
@@ -75,15 +74,9 @@ int get_valid_digit(int *legal_digits ,int num_of_legal_digits, int is_determin)
  * else, trying deterministicly to solve the board.
  */
 
-
 int build_board_helper(BOARD solved_board,int x, int y, int is_determin){
-	int next_x;
-	int next_y;
-	int digit;
-	int num_of_legal_digits;
-	int valid = 0;
+	int next_x,next_y,digit,num_of_legal_digits, end_of_board = 0,valid = 0;
 	int legal_digits[N*M];
-	int end_of_board = 0;
 	num_of_legal_digits = find_legal_digits(legal_digits,solved_board, x, y); /*find all legel digits for <x,y>*/
 	end_of_board = compute_next_cordinates(x,y,&next_x,&next_y);/*find if it is the end of the board*/
 	if(get_element_from_board(solved_board,x,y)!=0){  /*if this place has a value already, it means we are in deterministicly validation mode */
@@ -103,11 +96,9 @@ int build_board_helper(BOARD solved_board,int x, int y, int is_determin){
 		set_element_to_board(solved_board,x,y,0);
 		return 0;
 	}
-	//printf("num_of_legal_digits = %d , valid = %d" , num_of_legal_digits,valid);
 	while (num_of_legal_digits>0 && valid == 0){
 		digit = get_valid_digit(legal_digits , num_of_legal_digits , is_determin);
 		set_element_to_board(solved_board,x,y,digit);
-		//print_board(solved_board,solved_board);
 		valid = build_board_helper(solved_board,next_x,next_y,is_determin);
 		num_of_legal_digits--;
 	}
@@ -143,10 +134,8 @@ void zero_boards(BOARD board1, BOARD board2, BOARD board3){
 }
 
 void initialize_puzzle (int fix_num, BOARD game_board ,BOARD fix_board, BOARD solved_board){ /*initializing 3 boards: solved, fixed, and game. */
-	int res;
 	zero_boards(game_board, fix_board, solved_board); /*zero all boards*/
-	res = build_board(solved_board,0);/*find a random board*/
-	assert(res != 0);
+	build_board(solved_board,0);/*find a random board*/
 	make_fix_board(fix_num,fix_board,solved_board);/* fix "fix_num" of places in fix_board*/
 	copy_board(fix_board,game_board); /* copy fix_board to game_board*/
 	print_board(game_board,fix_board);

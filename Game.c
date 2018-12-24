@@ -1,18 +1,28 @@
-/*
- * Game.c
- *
- *  Created on: 12 áãöî 2018
- *      Author: nir
- */
-
 #include "Game.h"
 
-
+/**
+ * execute the "hint" command: gets the value of a cell in the current solution-board, and prints it as a hint for the user.
+ *
+ * @param solved_board - the current solution for the puzzle.
+ * @param x - the required cells's column.
+ * @param x - the required cells's row.
+ *
+ * @return 0.
+ */
 int hint(BOARD solved_board, int x, int y) {
 	printf("Hint: set cell to %d\n", get_element_from_board(solved_board, x, y));
 	return 0;
 }
 
+/**
+ * execute the "validate" command: solves a copy of the game-board with the deterministic Back-tracking algorithm.
+ * If a solution was found, it replaces the current solution-board. Finally, the function prints a success/failure message.
+ *
+ * @param board - the current puzzle.
+ * @param solved_board - the current solution for the puzzle.
+ *
+ * @return 0.
+ */
 int validate(BOARD board, BOARD solved_board) {
 	int is_solvable;
 	BOARD temp_board;
@@ -28,16 +38,35 @@ int validate(BOARD board, BOARD solved_board) {
 	return 0;
 }
 
+/**
+ * execute the "exit" command: prints an exit message (and terminate the program).
+ *
+ * @return 0.
+ */
 int exit_game() {
 	/* free resources...? */
 	printf("Exiting…\n");
 	return 0;
 }
 
+/**
+ * execute the "restart" command (start a new puzzle).
+ *
+ * @return 0.
+ */
 int restart_game() {
 	return 0;
 }
 
+/*
+ * checks if the puzzle is solved completely, and if so then prints a message of successful solution.
+ *
+ * @param board - the current puzzle.
+ *
+ * @return
+ * 1 - if every cell of 'board' is full.
+ * 0 - otherwise.
+ */
 int puzzle_solved(BOARD board) {
 	int i;
 	int j;
@@ -52,11 +81,36 @@ int puzzle_solved(BOARD board) {
 	return 1;
 }
 
+/*
+ * sets the value of a cell and prints the current puzzle.
+ *
+ * @param board - the current puzzle.
+ * @param fix_board - a puzzle that contains only values that never change throughout the game.
+ * @param x - the required cells's column.
+ * @param y - the required cells's row.
+ * @param z - the required cells's new given value.
+ */
 void insert(BOARD board,BOARD fix_board, int x, int y, int z) {
 	set_element_to_board(board,x,y,z);
 	print_board(board, fix_board);
 }
 
+/*
+ * execute the "set" command: if the given parameters represent a valid insertion (the required cell isn't "fixed" and is_valid_insertion
+ * returns 1), then the function calls insert. Otherwise, it prints the relevant error-message.
+ * If an empty cell was filled, the function checks if calls puzzle_solved and returns its return value.
+ * .
+ *
+ * @param board - the current puzzle.
+ * @param fix_board - a puzzle that contains only values that never change throughout the game.
+ * @param x - the required cells's column.
+ * @param y - the required cells's row.
+ * @param z - the required cells's new given value.
+ *
+ * @return
+ * 1 - if the current puzzle has been completed (by filling the last empty cell).
+ * 0 - otherwise.
+ */
 int set(BOARD board,BOARD fix_board, int x, int y, int z){
 	int fix_val = get_element_from_board(fix_board,x,y);
 	if(fix_val!=0){
@@ -75,6 +129,19 @@ int set(BOARD board,BOARD fix_board, int x, int y, int z){
 	return 0;
 }
 
+/*
+ * performs a move on the current puzzle, according to a specific given command.
+ *
+ * @param command - the array that represents a command:
+ * the first element represents the command word and the rest of the elements represents the command parameters (if there are any).
+ * @param board - the current puzzle.
+ * @param fix_board - a puzzle that contains only values that never change throughout the game.
+ * @param solved_board - the current solution for the puzzle.
+ *
+ * @return
+ * 1 - if the function 'set' is called and returns 1 (if the current puzzle has been completed by filling the last empty cell).
+ * 0 - otherwise.
+ */
 int execute_command(int *command, BOARD board, BOARD fix_board, BOARD solved_board) {
 	switch (command[0]) {
 	case SET:

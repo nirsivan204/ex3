@@ -81,6 +81,7 @@ void print_block(BLOCK block){ /*printing a given block*/
 void print_block_row(BLOCK block,BLOCK fixed_block,int row){ /*printing the row of block, by the printing rules in the header file*/
 	int i;
 	for (i=0;i<M;i++){/*for every col*/
+		printf(" ");
 		if(fixed_block[row][i]!=0){ /*if fixed, print "." else print " "*/
 			printf(".");
 		}else{
@@ -103,7 +104,7 @@ void print_board(BOARD board, BOARD fixed_board){ /*printing the board, by the p
 	for (block_row = 0;block_row<M;block_row++){/*for each row of blocks in board*/
 		printf(SEPERATOR_ROW);
 		for(row = 0;row<N;row++){/*for each row in a block*/
-			printf("| ");
+			printf("|");
 			for (block_col = 0;block_col<N;block_col++){/*for each block in the row*/
 				print_block_row(board[block_row][block_col],fixed_board[block_row][block_col],row); /*print the row*/
 				printf(" |");

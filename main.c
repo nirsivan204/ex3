@@ -6,12 +6,9 @@
  */
 
 #include "SPBufferset.h"
-#include "MainAux.h"
-#include "Solver.h"
 #include "Game.h"
 #include "Parser.h"
 #include <time.h>
-#include "BoardHandle.h"
 
 int main(int argc, char *argv[]){
 	BOARD game_board;
@@ -20,7 +17,7 @@ int main(int argc, char *argv[]){
 	int fix;
 	int is_game_over = 0;
 	int command[4];
-	int seed = atoi(argv[0]);
+	int seed = atoi(argv[argc-1]);
 	srand(seed);
 	SP_BUFF_SET();
 	do {
