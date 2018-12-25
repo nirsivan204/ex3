@@ -7,11 +7,9 @@
  * @param x - the required cells's column.
  * @param x - the required cells's row.
  *
- * @return 0.
  */
-int hint(BOARD solved_board, int x, int y) {
+void hint(BOARD solved_board, int x, int y) {
 	printf("Hint: set cell to %d\n", get_element_from_board(solved_board, x, y));
-	return 0;
 }
 
 /**
@@ -21,9 +19,8 @@ int hint(BOARD solved_board, int x, int y) {
  * @param board - the current puzzle.
  * @param solved_board - the current solution for the puzzle.
  *
- * @return 0.
  */
-int validate(BOARD board, BOARD solved_board) {
+void validate(BOARD board, BOARD solved_board) {
 	int is_solvable;
 	BOARD temp_board;
 	copy_board(board,temp_board);
@@ -35,27 +32,23 @@ int validate(BOARD board, BOARD solved_board) {
 	else{
 		printf("Validation failed: board is unsolvable\n");
 	}
-	return 0;
 }
 
 /**
  * execute the "exit" command: prints an exit message (and terminate the program).
  *
- * @return 0.
  */
-int exit_game() {
+void exit_game() {
 	/* free resources...? */
 	printf("Exiting...\n");
-	return 0;
 }
 
 /**
  * execute the "restart" command (start a new puzzle).
+ * for now does nothing, maybe in future cases we will need it.
  *
- * @return 0.
  */
-int restart_game() {
-	return 0;
+void restart_game() {
 }
 
 /*
@@ -147,15 +140,19 @@ int execute_command(int *command, BOARD board, BOARD fix_board, BOARD solved_boa
 	case SET:
 		return set(board, fix_board, --command[1], --command[2], command[3]);
 	case HINT:
-		return hint(solved_board, --command[1], --command[2]);
+		hint(solved_board, --command[1], --command[2]);
+		break;
 	case VALIDATE:
-		return validate(board, solved_board);
+		validate(board, solved_board);
+		break;
 	case RESTART:
-		return restart_game();
+		restart_game();
+		break;
 	case EXIT:
-		return exit_game();
-	default:
-		return 0;
+		exit_game();
+		break;
 	}
+	return 0;
+
 }
 

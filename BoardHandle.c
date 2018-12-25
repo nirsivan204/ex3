@@ -166,7 +166,7 @@ void print_board(BOARD board, BOARD fixed_board){ /*printing the board, by the p
 	int block_col = 0 ;
 	int row = 0;
 	for (block_row = 0;block_row<M;block_row++){/*for each row of blocks in board*/
-		printf(SEPERATOR_ROW);
+		printf(SEPARATOR_ROW);
 		for(row = 0;row<N;row++){/*for each row in a block*/
 			printf("|");
 			for (block_col = 0;block_col<N;block_col++){/*for each block in the row*/
@@ -176,7 +176,7 @@ void print_board(BOARD board, BOARD fixed_board){ /*printing the board, by the p
 			printf("\n");
 		}
 	}
-	printf(SEPERATOR_ROW);
+	printf(SEPARATOR_ROW);
 
 }
 

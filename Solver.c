@@ -6,7 +6,6 @@
  *      Author: nir
  */
 #include "Solver.h"
-#include "assert.h"
 
 /*
  * (for debug only)
@@ -38,7 +37,12 @@ int get_rand_number(int range){ /*returning a random number between 0 to range-1
  * this function deletes chosen number from the array of possible digits, and updating the array
  * ***for now, it is doing it naively because we decided
  *    that it is fast enough for small arrays and relatively small boards.
- *    in the future we will do it with a linked list and not arrays.***
+ *    in the future we will do it with a linked list and not arrays (for the deterministic case).
+ *    one should notice, that for the random case,
+ *    even linked list will not be more efficient because while deleting from the list will be faster
+ *    (when we have the pointer to the item),
+ *    getting to the right item (for retrieving or deleting) will take O(N*M)
+ *    just like it is now.***
  *
  * @param legal_digits - the array of possible digits
  * @param index        - the index of the number is needed to be deleted
@@ -146,14 +150,12 @@ int build_board_helper(BOARD solved_board,int x, int y, int is_determin){
 	num_of_legal_digits = find_legal_digits(legal_digits,solved_board, x, y); /*find all legel digits for <x,y>*/
 	end_of_board = compute_next_cordinates(x,y,&next_x,&next_y);/*find if it is the end of the board*/
 	if(get_element_from_board(solved_board,x,y)!=0){  /*if this place has a value already, it means we are in deterministicly validation mode */
-		assert(is_determin == 1);
 		if(end_of_board == 0 ){ /*if it is not the end of the board, continue with the next coordinates*/
 			return build_board_helper(solved_board,next_x,next_y,is_determin);
 		}
 	}
 	if(end_of_board == 1){ /*if it is the end of the board*/
 		if(get_element_from_board(solved_board,x,y) == 0){ /*if this place doesnt have a value*/
-			assert(num_of_legal_digits == 1);
 			set_element_to_board(solved_board,x,y,legal_digits[0]); /*put the only value possible in solved_board*/
 		}
 		return 1;/*return it is solvable*/

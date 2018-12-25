@@ -11,7 +11,7 @@
  * @return
  * 3 - if 'command' is "set".
  * 2 - if 'command' is "hint".
- * 0 - otherwise ('command' is "validate", "restart" or "exit".
+ * 0 - otherwise ('command' is "validate", "restart" or "exit").
  */
 int num_of_params(int command) {
 	switch (command) {
@@ -150,8 +150,14 @@ void read_command(int *command, int is_game_over) {
  */
 int num_of_fixed_cells() {
 	int num_Of_cells;
+	int scanf_res;
 	printf("Please enter the number of cells to fill [0-80]:\n");
-	if (scanf("%d", &num_Of_cells) == -1) {/* EOF */
+	scanf_res = scanf("%d", &num_Of_cells);
+	if(scanf_res<-1){
+		printf("Error: num_of_fixed_cells() has failed\n");
+		return -1;
+	}
+	if (scanf_res == -1) {/* EOF */
 		printf("Exiting...\n");
 		return -1;
 	}

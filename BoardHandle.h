@@ -14,7 +14,7 @@
 #include <stdio.h>
 #define N 3 /*num of rows in a block*/
 #define M 3 /*num of cols in a block*/
-#define SEPERATOR_ROW "----------------------------------\n"
+#define SEPARATOR_ROW "----------------------------------\n"  /*the separator row for printing*/
 typedef int BLOCK[N][M]; /*BLOCK is a N X M matrix of ints*/
 typedef BLOCK BOARD[M][N]; /*BOARD is a M X N matrix of BLOCKs*/
 
