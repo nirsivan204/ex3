@@ -33,7 +33,7 @@ int num_of_params(int command) {
  *
  * @return
  * 1 - if 'number' is between 'minValue' and 'maxValue'.
- * -1 - otherwise.
+ * 0 - otherwise.
  */
 int is_legal_number(int number, int minValue, int maxValue) {
 	return number >= minValue && number <= maxValue;
@@ -45,11 +45,11 @@ int is_legal_number(int number, int minValue, int maxValue) {
  * Else ('is_puzzle_solved' is 1), the valid commands are: restart and exit.
  *
  * @param string - a possible command word that was filled in the is_valid_command function.
- * @param is_puzzle_solved - 1 if the Sudoku game is solved completely, 0 else.
+ * @param is_game_over -  1 if the Sudoku game was solved completely. if so, only restart and exit can be called. 0 otherwise.
  *
  * @return
- * 1 - if the input line can represent a valid command as described above.
- * -1 - otherwise
+ * 1 - if the input string can represent a valid command as described above.
+ * 0 - otherwise
  */
 int search_command(char *string, int is_game_over) {
 	int index;
@@ -58,7 +58,7 @@ int search_command(char *string, int is_game_over) {
 	for (; index < 5; index++)
 		if (strcmp(string, commands[index]) == 0)
 			return ++index;
-	return -1;
+	return 0;
 }
 
 /**
@@ -70,11 +70,11 @@ int search_command(char *string, int is_game_over) {
  * @param command_input - an array containing the input line that was filled in the read_command function.
  * @param command - the array that represents a command:
  * the first element represents the command word and the rest of the elements represents the command parameters (if there are any).
- * @param is_puzzle_solved - 1 if the Sudoku game is solved completely, 0 else.
+ * @param is_game_over -  1 if the Sudoku game was solved completely. if so, only restart and exit can be called. 0 otherwise.
  *
  * @return
  * 1 - if the input line can represent a valid command as described above.
- * -1 - otherwise
+ * 0 - otherwise
  */
 int is_valid_command(char command_input[], int *command, int is_game_over) {
 	char *string = "";
@@ -82,14 +82,14 @@ int is_valid_command(char command_input[], int *command, int is_game_over) {
 	string = strtok(command_input, " \t\r\n");
 	command[index] = search_command(string, is_game_over);
 
-	if (command[index] == -1) {
-		return -1;
+	if (command[index] == 0) {
+		return 0;
 	}
 
 	for (index = 1; index <= num_of_params(command[0]); index++) {
 		string = strtok(NULL, " \t\r\n");
 		if (string == NULL) {
-			return -1;
+			return 0;
 		}
 		command[index] = atoi(string);
 	}
@@ -123,7 +123,7 @@ int check_if_blank(char *line){
  *
  * @param command - the array that represents a command:
  * the first element represents the command word and the rest of the elements represents the command parameters (if there are any).
- * @param is_puzzle_solved - 1 if the Sudoku game is solved completely, 0 else.
+ * @param is_game_over - 1 if the Sudoku game was solved completely. if so, only restart and exit can be called. 0 otherwise.
  */
 void read_command(int *command, int is_game_over) {
 	char command_input[MAX_COMMAND_LENGTH];
@@ -133,7 +133,7 @@ void read_command(int *command, int is_game_over) {
 			return;
 		}
 	}while(check_if_blank(command_input)==1);
-	if (is_valid_command(command_input, command, is_game_over)==-1) {
+	if (is_valid_command(command_input, command, is_game_over) == 0) {
 		printf("Error: invalid command\n");
 		read_command(command, is_game_over);
 	}
@@ -155,7 +155,7 @@ int num_of_fixed_cells() {
 		printf("Exiting...\n");
 		return -1;
 	}
-	if (!is_legal_number(num_Of_cells, 0, 80)) {
+	if (is_legal_number(num_Of_cells, 0, 80) == 0) {
 		printf("Error: invalid number of cells to fill (should be between 0 and 80)\n");
 		return num_of_fixed_cells();
 	}

@@ -1,4 +1,3 @@
-#define MAX_COMMAND_LENGTH 1024
 /**
  * Parser module -  reads and interprets the user's inputs. This module supports the following functions:
  *
@@ -6,7 +5,7 @@
  * 						cells with values that never change throughout the game.
  * read_command - reads, interprets and checks validation of the user's inputs lines that represents commands.
  */
-
+#define MAX_COMMAND_LENGTH 1024
 /**
  * asks the user to input a number that represents the number of "fixed" cells. if the number isn't between 0 to 80,
  * the function prints an error and the process repeats itself until the input is valid.

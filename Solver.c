@@ -8,7 +8,13 @@
 #include "Solver.h"
 #include "assert.h"
 
-
+/*
+ * (for debug only)
+ * this function prints an array
+ * @param arr    - the array to print
+ * @param length - how many cells to print
+ *
+ */
 
 void print_array(int *arr,int length){ /*helper function for debug, prints an array*/
 	int i;
@@ -18,15 +24,44 @@ void print_array(int *arr,int length){ /*helper function for debug, prints an ar
 	printf("\n");
 }
 
+/*
+ * this function return a random number in a desired range
+ * @param range    - the range
+ *
+ * @return a random number between 0 to range-1 (include)
+ */
 int get_rand_number(int range){ /*returning a random number between 0 to range-1*/
 	return rand()%range;
 }
-void delete_digit(int *legal_digits,int index, int length){/*deletes the chosen number from the array of possible digits, and updating the array*/
+
+/*
+ * this function deletes chosen number from the array of possible digits, and updating the array
+ * ***for now, it is doing it naively because we decided
+ *    that it is fast enough for small arrays and relatively small boards.
+ *    in the future we will do it with a linked list and not arrays.***
+ *
+ * @param legal_digits - the array of possible digits
+ * @param index        - the index of the number is needed to be deleted
+ * @param length       - the length of the array legal_digits
+ *
+ */
+void delete_digit(int *legal_digits,int index, int length){
 	int i;
 	for(i=index;i<length-1;i++){
 		legal_digits[i] = legal_digits[i+1];
 	}
 }
+
+/*
+ * this function is finding all legel digits (between 0 to N*M), and is putting them in the legel digits array.
+ *
+ * @param legal_digits - the array of possible digits
+ * @param game_board   - the board to check
+ * @param x            - the column of the cell to check
+ * @param y            - the row of the cell to check
+ *
+ * @return the number of possible digits
+ */
 
 int find_legal_digits(int *legal_digits,BOARD game_board,int x,int y){ /*finding all legel digits, and put them in the legel digits array. returning the num of possible digits*/
 	int digit;
@@ -40,7 +75,19 @@ int find_legal_digits(int *legal_digits,BOARD game_board,int x,int y){ /*finding
 	return num_of_legal_digits;
 }
 
-int compute_next_cordinates(int x, int y , int *next_x , int *next_y){ /*computes the next cordinates. if x,y are the right most and down most place in the board, returning 1 else returning 0*/
+/*
+ * this function computes the next cordinates.
+ *
+ * @param x            - the column of the current cell
+ * @param y            - the row of the current cell
+ * @param next_x       - the column of the next cell
+ * @param next_y       - the row of the next cell
+ *
+ * @return 1 if x,y are the right most and down most place in the board
+ * 		   0 otherwise
+ */
+
+int compute_next_cordinates(int x, int y , int *next_x , int *next_y){
 	if(x==N*M-1){
 		*next_x = 0;
 		if(y == N*M-1){
@@ -55,7 +102,18 @@ int compute_next_cordinates(int x, int y , int *next_x , int *next_y){ /*compute
 	return 0;
 }
 
-int get_valid_digit(int *legal_digits ,int num_of_legal_digits, int is_determin){ /*gets the next valid digit (randomly or deterministicly)*/
+/*
+ * gets the next valid digit (randomly or deterministically)
+ *
+ * @param legal_digits         - the array of legal digits
+ * @param num_of_legal_digits  - num of legal digits in the array
+ * @param is_determin          - if 1 it will choose deterministically, if 0 it will choose randomly
+ *
+ * @return 1 if x,y are the right most and down most place in the board
+ * 		   0 otherwise
+ */
+
+int get_valid_digit(int *legal_digits ,int num_of_legal_digits, int is_determin){ /**/
 	int index = 0;
 	int res = 0;
 	if(num_of_legal_digits == 1){
@@ -72,6 +130,14 @@ int get_valid_digit(int *legal_digits ,int num_of_legal_digits, int is_determin)
 /*recursive method, to build the solved board: if is_determin == 0,
  * building randomly the board (first time initialize) ,
  * else, trying deterministicly to solve the board.
+ *
+ * @param solved_board - the board to build, at the end it will store the solution.
+ * @param x            - the column
+ * @param y            - the row
+ * @param is_determin  - if 1 it will build deterministically, if 0 it will build randomly
+ *
+ * @return 1 if build was successful
+ * 		   0 otherwise
  */
 
 int build_board_helper(BOARD solved_board,int x, int y, int is_determin){
@@ -109,7 +175,16 @@ int build_board_helper(BOARD solved_board,int x, int y, int is_determin){
 	return 1;
 }
 
-void make_fix_board(int fix_num, BOARD fix_board, BOARD solved_board){/*choosing fix_num random places to fix in place , and copying them from solved_board to the empty fix_board*/
+/*
+ * choosing fix_num random places to fix in place,
+ * and copying them from solved_board to the empty fix_board
+ *
+ * @param fix_num      - number of fixed cells
+ * @param fix_board    - the board that will hold the fixed places at the end.
+ * @param solved_board - the board that holds the solution.
+ *
+ */
+void make_fix_board(int fix_num, BOARD fix_board, BOARD solved_board){/**/
 	int counter = 0;
 	int x;
 	int y;
@@ -123,15 +198,34 @@ void make_fix_board(int fix_num, BOARD fix_board, BOARD solved_board){/*choosing
 	}
 }
 
-int build_board(BOARD board, int is_determin){ /*wrapper function for the recursive method that builds the board*/
+/*
+ * wrapper function for the recursive method that builds the board
+ * explanation in the .h file.
+ *
+ *
+ */
+
+int build_board(BOARD board, int is_determin){
 	return build_board_helper(board,0,0,is_determin);
 }
+
+/*
+ * this function will zero 3 boards by calling the function zero_board 3 times.
+ * @param board1 - the first board to initialize with zero.
+ * @param board2 - the second board to initialize with zero.
+ * @param board3 - the third board to initialize with zero.
+ *
+ */
 
 void zero_boards(BOARD board1, BOARD board2, BOARD board3){
 	zero_board(board1);
 	zero_board(board2);
 	zero_board(board3);
 }
+
+/*
+ * this function defined in the .h file.
+ */
 
 void initialize_puzzle (int fix_num, BOARD game_board ,BOARD fix_board, BOARD solved_board){ /*initializing 3 boards: solved, fixed, and game. */
 	zero_boards(game_board, fix_board, solved_board); /*zero all boards*/

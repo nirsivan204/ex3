@@ -18,11 +18,8 @@
 typedef int BLOCK[N][M]; /*BLOCK is a N X M matrix of ints*/
 typedef BLOCK BOARD[M][N]; /*BOARD is a M X N matrix of BLOCKs*/
 
-
-
-
-
 /*
+ * this function return a value of a cell in the board
  * @param board - the board.
  * @param x - the cell's col.
  * @param y - the cell's row.
@@ -32,6 +29,7 @@ typedef BLOCK BOARD[M][N]; /*BOARD is a M X N matrix of BLOCKs*/
 int get_element_from_board(BOARD board, int x,int y);
 
 /*
+ * this function sets a value to a cell in the board
  * @param board - the board.
  * @param x - the cell's col.
  * @param y - the cell's row.
@@ -41,12 +39,14 @@ int get_element_from_board(BOARD board, int x,int y);
 void set_element_to_board(BOARD board, int x,int y,int z);
 
 /*
+ * this function initialize the board with zeros (empty cells)
  * @param board - the board needed to be empty. the board will be initialized with zeros
  *
  */
 void zero_board(BOARD board);
 
 /*
+ * this function validate that an insertion to a cell is legal (uniqueness in row, column and block)
  * @param board - the board.
  * @param x - the cell's col.
  * @param y - the cell's row.
@@ -57,15 +57,16 @@ void zero_board(BOARD board);
 int is_valid_insertion(BOARD board,int x,int y,int z);
 
 /*
- * @param board - the board needed to be printed.
- * @param fixed_board - the fixed board. the function needs it to print "." before fixed values, or " " before not fixed values.
+ * this function prints the board
+ * @param board       - the board needed to be printed.
+ * @param fixed_board - the fixed board. the function needs it to print "." before fixed values, or " " before not-fixed values.
  *
  */
 void print_board(BOARD board, BOARD fixed_board);
 
-/*
- * @param in_board - the board needed to be copied.
- * @param out_board- the board that will be a copy of in_board after the function call
+/*this function is copying all the cells' value of one board to another board.
+ * @param in_board  - the board needed to be copied.
+ * @param out_board - the board that will be a copy of in_board after the function call
  *
  */
 void copy_board(BOARD in_board, BOARD out_board);

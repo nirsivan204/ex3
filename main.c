@@ -22,10 +22,13 @@ int main(int argc, char *argv[]){
 	SP_BUFF_SET();
 	do {
 		fix = num_of_fixed_cells();
-		initialize_puzzle(fix, game_board, fix_board, solved_board);
+		if(fix < 0){/*problem at reading the input*/
+			break;
+		}
+		initialize_puzzle(fix, game_board, fix_board, solved_board);/*initialize all the boards*/
 		do{
-			read_command(command, is_game_over);
-			is_game_over = execute_command(command, game_board, fix_board, solved_board);
+			read_command(command, is_game_over);/*read next command*/
+			is_game_over = execute_command(command, game_board, fix_board, solved_board);/*execute command*/
 		}while(command[0] < 4);/*set, hint or validate*/
 	}while(command[0] == RESTART);
 	return 0;

@@ -45,7 +45,7 @@ int validate(BOARD board, BOARD solved_board) {
  */
 int exit_game() {
 	/* free resources...? */
-	printf("Exiting…\n");
+	printf("Exiting...\n");
 	return 0;
 }
 
